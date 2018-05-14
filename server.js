@@ -1,7 +1,10 @@
 
 var express = require("express");
 var mysql = require("mysql");
+var bodyParser = require('body-parser');
 var app = express();
+var arr = [];
+var idTheme;
 app.use("/images",express.static(__dirname + "/images"));
 app.use("/css", express.static(__dirname + "/css"));
 app.use("/js", express.static(__dirname + "/js"));
@@ -14,64 +17,40 @@ var connection = mysql.createConnection({
 	host: "localhost",
 	user: "root",
 	password: "1",
-	database: "test"
+	database: "mydb"
 });
+var urlCodeParser = bodyParser.urlencoded({extended: false});
 
 
 app.get("/", function(req, res){
-	connection.query("SELECT * FROM words", function(error, rows, fields){
-		if(error){
-			console.log("Error in the query");
-		}else{
-			console.log("successful query");
-		}
+	connection.query("SELECT * FROM themes", function(error, rows, fields){
+		res.render("1",{cards: rows});
 	});
-	res.render("1.html");
-	// res.send("Hi");
-	// console.log("connected");
+
 });
 
-app.get("/2.html", function(req, res){
-	connection.query("SELECT * FROM words", function(error, rows, fields){
-		if(error){
-			console.log("Error in the query");
-		}else{
-			console.log("successful query");
-		}
+app.get("/learn", function(req, res){
+	idTheme = req.param("id");
+	var sel = "SELECT * FROM words WHERE idTheme = " + idTheme;
+	connection.query(sel, function(error, rows, fields){
+
+		res.render("2",{front: rows[0].word, back: rows[0].mean});
 	});
-	res.render("2.html");
-	// res.send("Hi");
-	// console.log("connected");
 });
 
-app.get("/2.1.html", function(req, res){
-	connection.query("SELECT * FROM words", function(error, rows, fields){
-		if(error){
-			console.log("Error in the query");
-		}else{
-			console.log("successful query");
-		}
-	});
-	res.render("2.1.html");
+app.get("/test", function(req, res){
+	res.render("3");
 });
-app.get("/2.2", function(req, res){
-	connection.query("SELECT * FROM words", function(error, rows, fields){
-		if(error){
-			console.log("Error in the query");
-		}else{
-			console.log("successful query");
-		}
-	});
-	res.render("2.2.html");
+app.get("/chucmung", function(req, res){
+	res.render("4");
 });
-app.get("/1.html", function(req, res){
-	connection.query("SELECT * FROM words", function(error, rows, fields){
-		if(error){
-			console.log("Error in the query");
-		}else{
-			console.log("successful query");
-		}
+app.post('/clicked', (req, res) => {
+	console.log("dabam");
+});
+app.get('/clicks', (req, res) => {
+  	connection.query("SELECT * FROM words WHERE idTheme = " + idTheme, function(error, rows, fields){
+		res.send(rows);
+		return;
 	});
-	res.render("1.html");
 });
 app.listen(3000);

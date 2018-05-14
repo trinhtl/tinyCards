@@ -87,12 +87,7 @@
 #header{
   position: relative;
 }
-.item div{
-  width: 500px;
-  height: 400px;
-  position: absolute;
-  left: 200px;
-}
+
 .carousel{
   position: relative;
 }

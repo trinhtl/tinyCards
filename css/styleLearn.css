@@ -86,3 +86,24 @@
 .navbar{
     background-color: #33CCFE;
 }
+#myProgress {
+    bottom: 20px;
+    width: 100%;
+}
+
+#myBar {
+    margin-bottom: 50px;
+    width: 20%;
+    height: 30px;
+    background-color: #4CAF50;
+}
+.col-md-3{
+    width: 200px;
+    height: 260px;
+}
+.rows{
+    margin-bottom: 80px;
+}
+.thumbnail{
+    width: 150%;
+}
